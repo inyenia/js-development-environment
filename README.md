@@ -1,5 +1,5 @@
-Angular TODO
-============
+Example TODO App 
+================
 
 Ejemplo de aplicación con (Mongo, Express, Angular, Node) stack
 
