@@ -1,5 +1,5 @@
-Angular TODO
-============
+Example TODO App 
+================
 
 Ejemplo de aplicación con (Mongo, Express, Angular, Node) stack
 
@@ -15,3 +15,8 @@ Ejecutar aplicación
 </pre> 
 
 Basado en http://carlosazaustre.es/blog/tutorial-ejemplo-de-aplicacion-web-con-angular-js-y-api-rest-con-node/
+
+* http://blog.jetbrains.com/webstorm/2014/01/getting-started-with-node-js-in-webstorm/
+* http://blog.jetbrains.com/webstorm/2014/02/running-and-debugging-node-js-application/
+* http://mean.io
+* https://github.com/wordnik/swagger-node-express
