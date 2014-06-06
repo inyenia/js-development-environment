@@ -1,85 +1,156 @@
-//server.js
+/**
+* Sample API build using Swagger by Wordnik, based loosly on their 
+* swagger-node-express example at https://github.com/wordnik/swagger-node-express
+*
+* @author Dan Giulvezan
+*
+* @requires express 		Routing module
+* @requires url 			Allows the URL to be read
+* @requires fs 				Provides access to the servers file system
+* @requires colors			Lets the app show colored output in the console window
+* @requires swagger 		Generates the API docs dynamically
+* @requires express-extras 	Adds additional middleware options to express; used for throttling
+*
+* @uses config.js
+* @uses api.js
+* @uses models/*
+*
+* @beta
+*/
 
-var express 	= require('express');
-var app 		= express();
-var mongoose 	= require('mongoose');
-var swagger     = require("swagger-node-express");
+try {
+	var express = require("express"),
+		url = require("url"),
+		fs = require('fs'),
+		color = require('colors'),
+        swagger = require("swagger-node-express");
+		extras = require('express-extras'),
+		api = require('./api.js');
+} catch(err) {
+	var msg = '\nCannot initialize API\n' + err + '\n';
+	return console.log(msg.red);
+};
 
-// Conexión con la base de datos
-mongoose.connect('mongodb://localhost:27017/angular-todo');
+var app = express();
+app.use(express.json());
+app.use(express.urlencoded());
 
-// Definición de modelos
-var Todo = mongoose.model('Todo', {
-	text: String
-});
+// Setup throttling to keep users from abusing the API
+app.use(extras.throttle({
+	urlCount: 100,
+	urlSec: 1,
+	holdTime: 10,
+	whitelist: {
+		'127.0.0.1': true
+	}
+}));
 
-// Configuración
-app.configure(function() {
-	app.use(express.static(__dirname + '/public'));		// Localización de los ficheros estáticos
-	app.use(express.logger('dev'));						// Muestra un log de todos los request en la consola
-	app.use(express.bodyParser());						// Permite cambiar el HTML con el método POST
-	app.use(express.methodOverride());					// Simula DELETE y PUT
-    app.use(express.favicon());
-
-    app.use(express.json());
-    app.use(express.urlencoded());
-});
-
-// Rutas de nuestro API
-app.get('/api/todos', function(req, res) {				// GET de todos los TODOs
-	Todo.find(function(err, todos) {
-		if(err) {
-			res.send(err);
-		}
-		res.json(todos);
-	});
-});
-
-app.post('/api/todos', function(req, res) {				// POST que crea un TODO y devuelve todos tras la creación
-	Todo.create({
-		text: req.body.text,
-		done: false
-	}, function(err, todo){
-		if(err) {
-			res.send(err);
-		}
-
-		Todo.find(function(err, todos) {
-			if(err){
-				res.send(err);
-			}
-			res.json(todos);
-		});
-	});
-});
-
-app.delete('/api/todos/:todo', function(req, res) {		// DELETE un TODO específico y devuelve todos tras borrarlo.
-	Todo.remove({
-		_id: req.params.todo
-	}, function(err, todo) {
-		if(err){
-			res.send(err);
-		}
-
-		Todo.find(function(err, todos) {
-			if(err){
-				res.send(err);
-			}
-			res.json(todos);
-		});
-
-	})
-});
-
-app.get('*', function(req, res) {						// Carga una vista HTML simple donde irá nuesta Single App Page
-	res.sendFile('./public/index.html');				// Angular Manejará el Frontend
-});
-
-// Couple the application to the Swagger module.
+// Set the main handler in swagger to the express app
 swagger.setAppHandler(app);
 
-// Escucha y corre el server
-app.listen(3000, function() {
-	console.log('App listening on port 3000');
+// This is a sample validator.  It simply says that for _all_ POST, DELETE, PUT
+// methods, the header `api_key` OR query param `api_key` must be equal
+// to the string literal `1234`.  All other HTTP ops are A-OK
+swagger.addValidator(
+	function validate(req, path, httpMethod) {
+		//  example, only allow POST for api_key="special-key"
+		if ("POST" == httpMethod || "DELETE" == httpMethod || "PUT" == httpMethod) {
+			var apiKey = req.headers["api_key"];
+			if (!apiKey) {
+				apiKey = url.parse(req.url,true).query["api_key"];
+			}
+			if ("1234" == apiKey) {
+				return true; 
+			}
+			return false;
+		}
+		return true;
+	}
+);
+
+// Find all of the model files in the 'models' folder and add the their definitions to swagger
+// so it can be displayed in the docs
+fs.readdir('models', function(err, list) {
+	if (err) return done(err);
+
+	if (list) {
+		list.forEach(function(file) {
+			file = 'models' + '/' + file;
+			fs.stat(file, function(err, stat) {
+				console.log('adding model def from ' + file);
+                var model = require('./' + file);
+				swagger.addModels(model);
+                swagger.add
+			});
+		});
+	};
 });
 
+// Add models and methods to swagger
+swagger.addGet(api.getAllCarriers)
+	.addGet(api.getAllManufacturers)
+	.addGet(api.getAllPhones)
+	.addGet(api.getCarrierById)
+	.addGet(api.getManufacturerById)
+	.addGet(api.getPhoneById)
+
+	.addPost(api.addCarrier)
+	.addPost(api.addManufacturer)
+	.addPost(api.addPhone)
+
+	.addPut(api.updateCarrier)
+	.addPut(api.updateManufacturer)
+	.addPut(api.updatePhone)
+
+	.addDelete(api.deleteCarrier)
+	.addDelete(api.deleteManufacturer)
+	.addDelete(api.deletePhone);
+
+/*swagger.configureDeclaration("carrier", {
+	description : "Operations about phone carriers",
+	authorizations : ["oauth2"],
+	produces: ["application/json"]
+});
+
+swagger.configureDeclaration("manufacturer", {
+	description : "Operations about phone manufacturers",
+	authorizations : ["oauth2"],
+	produces: ["application/json"]
+});*/
+
+// set api info
+swagger.setApiInfo({
+	title: "Swagger sample app for cell phone, manufacturer, and carrier data",
+	description: "This is a sample API for a small database of cell phones, manufacturers, and carriers. For this sample, you can use the api key \"1234\" to test the authorization filters",
+	termsOfServiceUrl: "http://helloreverb.com/terms/",
+	contact: "apiteam@wordnik.com",
+	license: "Apache 2.0",
+    licenseUrl: "http://www.apache.org/licenses/LICENSE-2.0.html"
+});
+
+swagger.setAuthorizations({
+	apiKey: {
+		type: "apiKey",
+		passAs: "header"
+	}
+});
+
+// Configures the app's base path and api version.
+swagger.configureSwaggerPaths("", "api-docs", "")
+swagger.configure("http://127.0.0.1:3000", "1.0.0");
+
+// Serve up swagger ui at /docs via static route
+var docs_handler = express.static(__dirname + '/swagger-ui/');
+app.get(/^\/docs(\/.*)?$/, function(req, res, next) {
+	if (req.url === '/docs') { // express static barfs on root url w/o trailing slash
+		res.writeHead(302, { 'Location' : req.url + '/' });
+		res.end();
+		return;
+	}
+	// take off leading /docs so that connect locates file correctly
+	req.url = req.url.substr('/docs'.length);
+	return docs_handler(req, res, next);
+});
+
+// Start the server on port 3000
+app.listen(3000);
