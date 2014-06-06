@@ -3,6 +3,7 @@
 var express 	= require('express');
 var app 		= express();
 var mongoose 	= require('mongoose');
+var swagger     = require("swagger-node-express");
 
 // Conexión con la base de datos
 mongoose.connect('mongodb://localhost:27017/angular-todo');
@@ -18,6 +19,10 @@ app.configure(function() {
 	app.use(express.logger('dev'));						// Muestra un log de todos los request en la consola
 	app.use(express.bodyParser());						// Permite cambiar el HTML con el método POST
 	app.use(express.methodOverride());					// Simula DELETE y PUT
+    app.use(express.favicon());
+
+    app.use(express.json());
+    app.use(express.urlencoded());
 });
 
 // Rutas de nuestro API
@@ -70,8 +75,11 @@ app.get('*', function(req, res) {						// Carga una vista HTML simple donde irá
 	res.sendFile('./public/index.html');				// Angular Manejará el Frontend
 });
 
+// Couple the application to the Swagger module.
+swagger.setAppHandler(app);
+
 // Escucha y corre el server
-app.listen(8080, function() {
-	console.log('App listening on port 8080');
+app.listen(3000, function() {
+	console.log('App listening on port 3000');
 });
 
