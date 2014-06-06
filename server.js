@@ -31,9 +31,30 @@ try {
 	return console.log(msg.red);
 };
 
+var path = require('path');
+var favicon = require('static-favicon');
+var logger = require('morgan');
+var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+
+var routes = require('./routes/index.js');
+
 var app = express();
-app.use(express.json());
-app.use(express.urlencoded());
+//app.use(express.json());
+//app.use(express.urlencoded());
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'jade');
+
+app.use(favicon());
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', routes);
 
 // Setup throttling to keep users from abusing the API
 app.use(extras.throttle({

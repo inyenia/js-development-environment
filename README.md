@@ -20,3 +20,4 @@ Basado en http://carlosazaustre.es/blog/tutorial-ejemplo-de-aplicacion-web-con-a
 * http://blog.jetbrains.com/webstorm/2014/02/running-and-debugging-node-js-application/
 * http://mean.io
 * https://github.com/wordnik/swagger-node-express
+* https://github.com/dgiul/node-swagger-express-mongodb
