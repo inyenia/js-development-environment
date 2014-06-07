@@ -108,27 +108,33 @@ fs.readdir('models', function(err, list) {
 var api_carrier = require('./services/carrier.js');
 var api_manufacturer = require('./services/manufacturer.js');
 var api_phone = require('./services/phone.js');
+var api_contact = require('./services/contact.js');
 
 // Add models and methods to swagger
 swagger.addGet(api_carrier.getAllCarriers)
 	.addGet(api_manufacturer.getAllManufacturers)
 	.addGet(api_phone.getAllPhones)
+    .addGet(api_contact.getAllContacts)
 
     .addGet(api_carrier.getCarrierById)
 	.addGet(api_manufacturer.getManufacturerById)
 	.addGet(api_phone.getPhoneById)
+    .addGet(api_contact.getContactById)
 
-	.addPost(api_carrier.addCarrier)
+    .addPost(api_carrier.addCarrier)
 	.addPost(api_manufacturer.addManufacturer)
 	.addPost(api_phone.addPhone)
+    .addPost(api_contact.addContact)
 
-	.addPut(api_carrier.updateCarrier)
+    .addPut(api_carrier.updateCarrier)
 	.addPut(api_manufacturer.updateManufacturer)
 	.addPut(api_phone.updatePhone)
+    .addPut(api_contact.updateContact)
 
-	.addDelete(api_carrier.deleteCarrier)
+    .addDelete(api_carrier.deleteCarrier)
 	.addDelete(api_manufacturer.deleteManufacturer)
-	.addDelete(api_phone.deletePhone);
+	.addDelete(api_phone.deletePhone)
+    .addDelete(api_contact.deleteContact);
 
 /*swagger.configureDeclaration("carrier", {
 	description : "Operations about phone carriers",
