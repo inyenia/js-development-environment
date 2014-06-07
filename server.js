@@ -24,13 +24,13 @@ try {
 		fs = require('fs'),
 		color = require('colors'),
         swagger = require("./swagger/swagger.js"),
-		extras = require('express-extras')
+		extras = require('express-extras'),
+        db = require('./db.js');
+
 } catch(err) {
 	var msg = '\nCannot initialize API\n' + err + '\n';
 	return console.log(msg.red);
 };
-
-var api = require('./api.js');
 
 var path = require('path');
 var favicon = require('static-favicon');
@@ -105,25 +105,30 @@ fs.readdir('models', function(err, list) {
 	};
 });
 
+var api_carrier = require('./services/carrier.js');
+var api_manufacturer = require('./services/manufacturer.js');
+var api_phone = require('./services/phone.js');
+
 // Add models and methods to swagger
-swagger.addGet(api.getAllCarriers)
-	.addGet(api.getAllManufacturers)
-	.addGet(api.getAllPhones)
-	.addGet(api.getCarrierById)
-	.addGet(api.getManufacturerById)
-	.addGet(api.getPhoneById)
+swagger.addGet(api_carrier.getAllCarriers)
+	.addGet(api_manufacturer.getAllManufacturers)
+	.addGet(api_phone.getAllPhones)
 
-	.addPost(api.addCarrier)
-	.addPost(api.addManufacturer)
-	.addPost(api.addPhone)
+    .addGet(api_carrier.getCarrierById)
+	.addGet(api_manufacturer.getManufacturerById)
+	.addGet(api_phone.getPhoneById)
 
-	.addPut(api.updateCarrier)
-	.addPut(api.updateManufacturer)
-	.addPut(api.updatePhone)
+	.addPost(api_carrier.addCarrier)
+	.addPost(api_manufacturer.addManufacturer)
+	.addPost(api_phone.addPhone)
 
-	.addDelete(api.deleteCarrier)
-	.addDelete(api.deleteManufacturer)
-	.addDelete(api.deletePhone);
+	.addPut(api_carrier.updateCarrier)
+	.addPut(api_manufacturer.updateManufacturer)
+	.addPut(api_phone.updatePhone)
+
+	.addDelete(api_carrier.deleteCarrier)
+	.addDelete(api_manufacturer.deleteManufacturer)
+	.addDelete(api_phone.deletePhone);
 
 /*swagger.configureDeclaration("carrier", {
 	description : "Operations about phone carriers",
@@ -140,7 +145,7 @@ swagger.configureDeclaration("manufacturer", {
 // set api info
 swagger.setApiInfo({
 	title: "Swagger sample app",
-	description: "This is a sample API for a small database of cell phones, manufacturers, and carriers. </br> For this sample, you can use the api key \"1234\" to test the authorization filters",
+	description: "This is a sample API for a small database of cell phones, manufacturers, and carriers. </br> For this sample, you can use the api key \"1234\" to test the authorization filters"
 	//termsOfServiceUrl: "http://helloreverb.com/terms/",
 	//contact: "apiteam@wordnik.com",
 	//license: "Apache 2.0",
