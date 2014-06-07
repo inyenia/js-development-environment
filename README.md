@@ -21,3 +21,6 @@ Basado en http://carlosazaustre.es/blog/tutorial-ejemplo-de-aplicacion-web-con-a
 * http://mean.io
 * https://github.com/wordnik/swagger-node-express
 * https://github.com/dgiul/node-swagger-express-mongodb
+* https://github.com/Dayde/angularjs-frontend-using-swagger-documentation
+* https://github.com/zkirill/nodejs-mongo-angular-crud
+*  

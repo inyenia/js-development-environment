@@ -62,8 +62,8 @@ var Phone = require('./models/phone.js');
 exports.getAllCarriers = {
 	'spec': {
 		description : "List all phone carriers",
-		path : "/carrier/list",
-		method: "GET",
+		path : "/api/carrier/list",
+        method: "GET",
 		summary : "List all phone carriers",
 		notes : "Returns a list of all phone carriers",
 		type : "Carrier",
@@ -88,8 +88,8 @@ exports.getAllCarriers = {
 exports.getAllManufacturers = {
 	'spec': {
 		description : "List all phone manufacturers",
-		path : "/manufacturer/list",
-		method: "GET",
+		path : "/api/manufacturer/list",
+        method: "GET",
 		summary : "List all phone manufacturers",
 		notes : "Returns a list of all phone manufacturers",
 		type : "Manufacturer",
@@ -114,8 +114,8 @@ exports.getAllManufacturers = {
 exports.getAllPhones = {
 	'spec': {
 		description : "List all phone models",
-		path : "/phone/list",
-		method: "GET",
+		path : "/api/phone/list",
+        method: "GET",
 		summary : "List all phone models",
 		notes : "Returns a list of all phone models",
 		type : "Phone",
@@ -143,7 +143,7 @@ exports.getAllPhones = {
 exports.getCarrierById = {
 	'spec': {
 		description : "Operations about carriers",
-		path : "/carrier/{carrierId}",
+		path : "/api/carrier/{carrierId}",
 		method: "GET",
 		summary : "Find carrier by ID",
 		notes : "Returns a carrier based on ID",
@@ -169,7 +169,7 @@ exports.getCarrierById = {
 exports.getManufacturerById = {
 	'spec': {
 		description : "Operations about manufacturers",
-		path : "/manufacturer/{manufId}",
+		path : "/api/manufacturer/{manufId}",
 		method: "GET",
 		summary : "Find manufacturer by ID",
 		notes : "Returns a manufacturer based on ID",
@@ -195,7 +195,7 @@ exports.getManufacturerById = {
 exports.getPhoneById = {
 	'spec': {
 		description : "Operations about phones",
-		path : "/phone/{phoneId}",
+		path : "/api/phone/{phoneId}",
 		method: "GET",
 		summary : "Find phone by ID",
 		notes : "Returns a phone based on ID",
@@ -223,7 +223,7 @@ exports.getPhoneById = {
 */
 exports.addCarrier = {
 	'spec': {
-		path : "/carrier",
+		path : "/api/carrier",
 		notes : "Adds a new carrier",
 		summary : "Add a new carrier",
 		method: "POST",
@@ -252,7 +252,7 @@ exports.addCarrier = {
 
 exports.addManufacturer = {
 	'spec': {
-		path : "/manufacturer",
+		path : "/api/manufacturer",
 		notes : "Adds a new manufacturer",
 		summary : "Add a new manufacturer",
 		method: "POST",
@@ -281,7 +281,7 @@ exports.addManufacturer = {
 
 exports.addPhone = {
 	'spec': {
-		path : "/phone",
+		path : "/api/phone",
 		notes : "Adds a new phone",
 		summary : "Add a new phone",
 		method: "POST",
@@ -313,7 +313,7 @@ exports.addPhone = {
 */
 exports.updateCarrier = {
 	'spec': {
-		path : "/carrier",
+		path : "/api/carrier",
 		notes : "Update an existing carrier",
 		summary : "Update an existing carrier",
 		method: "PUT",
@@ -349,7 +349,7 @@ exports.updateCarrier = {
 
 exports.updateManufacturer = {
 	'spec': {
-		path : "/manufacturer",
+		path : "/api/manufacturer",
 		notes : "Update an existing manufacturer",
 		summary : "Update an existing manufacturer",
 		method: "PUT",
@@ -384,7 +384,7 @@ exports.updateManufacturer = {
 
 exports.updatePhone = {
 	'spec': {
-		path : "/phone",
+		path : "/api/phone",
 		notes : "Update an existing phone",
 		summary : "Update an existing phone",
 		method: "PUT",
@@ -422,7 +422,7 @@ exports.updatePhone = {
 */
 exports.deleteCarrier = {
 	'spec': {
-		path : "/carrier",
+		path : "/api/carrier",
 		notes : "Delete an existing carrier",
 		summary : "Delete an existing carrier",
 		method: "DELETE",
@@ -450,7 +450,7 @@ exports.deleteCarrier = {
 
 exports.deleteManufacturer = {
 	'spec': {
-		path : "/manufacturer",
+		path : "/api/manufacturer",
 		notes : "Delete an existing manufacturer",
 		summary : "Delete an existing manufacturer",
 		method: "DELETE",
@@ -478,7 +478,7 @@ exports.deleteManufacturer = {
 
 exports.deletePhone = {
 	'spec': {
-		path : "/phone",
+		path : "/api/phone",
 		notes : "Delete an existing phone",
 		summary : "Delete an existing phone",
 		method: "DELETE",

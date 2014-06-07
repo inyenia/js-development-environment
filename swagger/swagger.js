@@ -27,7 +27,7 @@ function Swagger() {
   this.formatString = ".{format}";
   this.resourcePath = "/api-docs" + this.formatString;
   this.jsonSuffix = ".json";
-  this.basePath = "/";
+  this.basePath = "/api/";
   this.apiInfo = null;
   this.authorizations = null;
   this.swaggerVersion = "1.2";
@@ -403,7 +403,11 @@ Swagger.prototype.resourceListing = function(req, res) {
 
 Swagger.prototype.addMethod = function(app, callback, spec) {
   var self = this;
-  var apiRootPath = spec.path.split(/[\/\(]/)[1];
+
+  if(spec.path.split(/[\/\(]/)[1] != 'api'){
+      return;
+  }
+  var apiRootPath = spec.path.split(/[\/\(]/)[2];
   var root = self.resources[apiRootPath];
 
   if (root && root.apis) {

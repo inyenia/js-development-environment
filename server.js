@@ -23,13 +23,14 @@ try {
 		url = require("url"),
 		fs = require('fs'),
 		color = require('colors'),
-        swagger = require("swagger-node-express");
-		extras = require('express-extras'),
-		api = require('./api.js');
+        swagger = require("./swagger/swagger.js"),
+		extras = require('express-extras')
 } catch(err) {
 	var msg = '\nCannot initialize API\n' + err + '\n';
 	return console.log(msg.red);
 };
+
+var api = require('./api.js');
 
 var path = require('path');
 var favicon = require('static-favicon');
@@ -40,8 +41,6 @@ var bodyParser = require('body-parser');
 var routes = require('./routes/index.js');
 
 var app = express();
-//app.use(express.json());
-//app.use(express.urlencoded());
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -101,7 +100,6 @@ fs.readdir('models', function(err, list) {
 				console.log('adding model def from ' + file);
                 var model = require('./' + file);
 				swagger.addModels(model);
-                swagger.add
 			});
 		});
 	};
@@ -141,12 +139,12 @@ swagger.configureDeclaration("manufacturer", {
 
 // set api info
 swagger.setApiInfo({
-	title: "Swagger sample app for cell phone, manufacturer, and carrier data",
-	description: "This is a sample API for a small database of cell phones, manufacturers, and carriers. For this sample, you can use the api key \"1234\" to test the authorization filters",
-	termsOfServiceUrl: "http://helloreverb.com/terms/",
-	contact: "apiteam@wordnik.com",
-	license: "Apache 2.0",
-    licenseUrl: "http://www.apache.org/licenses/LICENSE-2.0.html"
+	title: "Swagger sample app",
+	description: "This is a sample API for a small database of cell phones, manufacturers, and carriers. </br> For this sample, you can use the api key \"1234\" to test the authorization filters",
+	//termsOfServiceUrl: "http://helloreverb.com/terms/",
+	//contact: "apiteam@wordnik.com",
+	//license: "Apache 2.0",
+    //licenseUrl: "http://www.apache.org/licenses/LICENSE-2.0.html"
 });
 
 swagger.setAuthorizations({
@@ -157,11 +155,12 @@ swagger.setAuthorizations({
 });
 
 // Configures the app's base path and api version.
-swagger.configureSwaggerPaths("", "api-docs", "")
+swagger.configureSwaggerPaths("", "api-docs", "");
 swagger.configure("http://127.0.0.1:3000", "1.0.0");
 
+
 // Serve up swagger ui at /docs via static route
-var docs_handler = express.static(__dirname + '/swagger-ui/');
+var docs_handler = express.static(__dirname + '/public/swagger-ui/');
 app.get(/^\/docs(\/.*)?$/, function(req, res, next) {
 	if (req.url === '/docs') { // express static barfs on root url w/o trailing slash
 		res.writeHead(302, { 'Location' : req.url + '/' });

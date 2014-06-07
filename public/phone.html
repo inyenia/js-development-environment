@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html ng-app="myApp" lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>CRUD</title>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-resource.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.6/angular-cookies.js"></script>
+    <script>
+        angular.module("myApp", ["ngResource"])
+                .factory('Phone', function ($resource) {
+                    return $resource('/api/phone/', {}, {
+                        update: {
+                            method: 'PUT',
+                            params: {
+                                id: '@_id'
+                            }
+                        }
+                    });
+                });
+
+        /**
+         * Document list controller.
+         * @param $scope
+         * @param Document
+         * @constructor
+         */
+        function ListCtrl ($scope, Phone) {
+            var phones = Phone.query(function () {
+                $scope.phones = phones;
+            }, function ($http) {
+
+                // Something went wrong and we should inspect $http to find out what.
+                console.log('Couldn\'t get document.');
+            });
+
+            // Read a document.
+            $scope.readPhone = function (index) {
+                var phoneAtIndex = phones[index];
+                var id = phoneAtIndex._id;
+
+                // Send GET request to the back end.
+                var phone = Phone.get({id: id}, function () {
+                    if (phone) {
+                        $scope.expandedPhone = phone;
+                    }
+                }, function ($http) {
+
+                    // Something went wrong and we should inspect $http to find out what.
+                    console.log('Couldn\t get phone.');
+                })
+            };
+
+            // Create a document.
+            $scope.createPhone = function () {
+                var phone = new Phone({
+                    date: new Date()
+                });
+
+                // Send POST request to the back end.
+                phone.$save(function (data) {
+                    phone.push(data);
+                }, function ($http) {
+
+                    // Something went wrong and we should inspect $http to find out what.
+                    console.log('Couldn\'t save phone.');
+                });
+            };
+
+            // Delete a document.
+            $scope.deletePhone = function (index) {
+                var phone = phone[index];
+                var id = phone._id;
+
+                // Send DELETE request to the back end.
+                Phone.delete({id: id}, function () {
+                    phones.splice(index, 1);
+                }, function ($http) {
+
+                    // Something went wrong and we should inspect $http to find out what.
+                    console.log('Couldn\'t save phone.');
+                });
+            };
+
+            // Update document.
+            $scope.updatePhone = function (index) {
+                var phone = phone[index];
+
+                // Update the date of last update.
+                phone.date = new Date();
+
+                // Send UPDATE request to the back end.
+                Phone.update(phone, function (data) {
+                    phone[index] = data;
+                }, function ($http) {
+
+                    // Something went wrong and we should inspect $http to find out what.
+                    console.log('Couldn\'t save phone.');
+                });
+            }
+        }
+    </script>
+</head>
+<body>
+<div ng-controller="ListCtrl">
+    <button type="button" ng-click="createDocument()">Create a new document</button>
+    <ul>
+        <li ng-repeat="document in documents">
+            <span>Document {{document._id}} last updated on {{document.date}}</span>
+            <button type="button" ng-click="readPhone($index)">Read</button>
+            <button type="button" ng-click="updatePhone($index)">Update</button>
+            <button type="button" ng-click="deletePhone($index)">Delete</button>
+        </li>
+    </ul>
+    <div ng-show="expandedPhone"><!-- Show div only if expandedDocument isn't null. -->
+        Read document with ID {{expandedPhone._id}} last modified on {{expandedPhone.date}}.
+    </div>
+</div>
+</body>
+</html>
