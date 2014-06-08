@@ -37,7 +37,7 @@ var Contact = require('../models/contact.js');
 exports.getAllContacts = {
     'spec': {
         description : "List all phone carriers",
-        path : "/api/contact/list",
+        path : "/api/contact",
         method: "GET",
         summary : "List all contacts",
         notes : "Returns a list of all contacts",

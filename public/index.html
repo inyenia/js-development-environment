@@ -11,7 +11,7 @@
     <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/components/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="/stylesheets/starter-template.css" rel="stylesheet">
@@ -26,7 +26,7 @@
     <![endif]-->
 </head>
 
-<body>
+<body ng-app="myApp">
 
 <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
     <div class="container">
@@ -44,27 +44,31 @@
                 <li class="active"><a href="/">Home</a></li>
                 <li><a href="#about">Carrier</a></li>
                 <li><a href="phone.html">Phone</a></li>
-                <li><a href="#contact">Manufacturer</a></li>
+                <li><a href="#manufacturer">Manufacturer</a></li>
+                <li><a href="#/contact">Contact</a></li>
                 <li><a href="/docs">API Docs</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
 </div>
 
-<div class="container">
-
-    <div class="starter-template">
-        <h1>Bootstrap starter template</h1>
-        <p class="lead">Use this document as a way to quickly start any new project.<br> All you get is this text and a mostly barebones HTML document.</p>
-    </div>
-
-</div><!-- /.container -->
-
+<div class="container" ng-view></div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
+<script src="/components/jquery/jquery.min.js"></script>
+<script src="/components/bootstrap/js/bootstrap.min.js"></script>
+<script src="/components/angular/angular.min.js"></script>
+<script src="/components/underscore/underscore-min.js"></script>
+
+<script src="/app.js"></script>
+<script src="/services/urlService.js"></script>
+<script src="/services/contactService.js"></script>
+<script src="/controllers/list.js"></script>
+<script src="/controllers/edit.js"></script>
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-<script src="/bootstrap/js/bootstrap.min.js"></script>
+<script src="/components/bootstrap/js/bootstrap.min.js"></script>
 </body>
 </html>

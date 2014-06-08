@@ -37,9 +37,6 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
-var routes = require('./routes/index.js');
-
 var app = express();
 
 // view engine setup
@@ -52,6 +49,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+var routes = require('./routes/index.js');
 
 app.use('/', routes);
 
@@ -79,10 +79,10 @@ swagger.addValidator(
 			if (!apiKey) {
 				apiKey = url.parse(req.url,true).query["api_key"];
 			}
-			if ("1234" == apiKey) {
+			//if ("1234" == apiKey) {
 				return true; 
-			}
-			return false;
+			//}
+			//return false;
 		}
 		return true;
 	}
@@ -171,7 +171,7 @@ swagger.configure("http://127.0.0.1:3000", "1.0.0");
 
 
 // Serve up swagger ui at /docs via static route
-var docs_handler = express.static(__dirname + '/public/swagger-ui/');
+var docs_handler = express.static(__dirname + '/public/components/swagger-ui/');
 app.get(/^\/docs(\/.*)?$/, function(req, res, next) {
 	if (req.url === '/docs') { // express static barfs on root url w/o trailing slash
 		res.writeHead(302, { 'Location' : req.url + '/' });

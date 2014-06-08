@@ -1,0 +1,27 @@
+
+	<form class="form-horizontal" name="editForm">
+		<h3>Edit contact</h3>
+		<fieldset ng-show="dataReceived">
+			
+			<div class="control-group">
+				<label class="control-label" for="inputFirstname" >Firstname</label>
+				<div class="controls">
+					<input id="inputFirstname" type="text" class="input-medium" placeholder="First name" ng-model="contact.name" autofocus required/>
+				</div>
+			</div>
+
+			<div class="control-group">
+				<label class="control-label" for="inputLastname" >Lastname</label>
+				<div class="controls" ng-class="{error: editForm.name.$invalid}">
+					<input id="inputLastname" type="text" class="input-medium" placeholder="Last name" ng-model="contact.lastName" required />
+				</div>
+			</div>
+
+			<div>
+				<button class="btn btn-large btn-primary" ng-click="save($event)" ng-disabled="editForm.$invalid" >Save</button>
+				<button class="btn btn-large btn-primary" ng-click="cancel($event)" >Cancel</button>
+			</div>
+		</fieldset>
+        <div ng-hide="dataReceived"><img src="/images/throbber.gif" alt="Loading..." /></div>
+	</form>
+
