@@ -22,7 +22,30 @@ This is only a test, not a functional application
 </pre> 
 
 ####Project architecture
-
+<pre>
+	+ public
+		+ components
+			\ angular
+			\ bootstrap
+			\ jquery
+			\ swagger-ui
+			
+		\ stylesheets
+		\ images
+		\ controller
+		\ services
+		+ views
+		app.js
+		
+	+ model
+	\ services
+	\ swagger
+	
+	package.json
+	config.js
+	db.js
+	server.js
+</pre> 
 
 ####Interesting links to install environment
 
