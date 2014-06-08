@@ -23,7 +23,7 @@ This is only a test, not a functional application
 
 ####Project architecture
 <pre>
-	+ public
+	+ public (front end folder)
 		+ components
 			\ angular
 			\ bootstrap
@@ -32,19 +32,19 @@ This is only a test, not a functional application
 			
 		\ stylesheets
 		\ images
-		\ controller
-		\ services
-		+ views
-		app.js
+		\ controller (angular.js controllers)
+		\ services (angular.js services)
+		+ views (angular.js views)
+		app.js (routers and swagger doc reader)
 		
-	+ model
-	\ services
-	\ swagger
+	+ model (data base and swagger models)
+	\ services (rest services)
+	\ swagger (swagger spec generator)
 	
-	package.json
-	config.js
-	db.js
-	server.js
+	package.json (node dependencies)
+	config.js (configure enviroment)
+	db.js (data base manager)
+	server.js (node.js server)
 </pre> 
 
 ####Interesting links to install environment
