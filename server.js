@@ -50,11 +50,6 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
-var routes = require('./routes/index.js');
-
-app.use('/', routes);
-
 // Setup throttling to keep users from abusing the API
 app.use(extras.throttle({
 	urlCount: 100,
