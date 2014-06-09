@@ -11,6 +11,12 @@ This is only a test, not a functional application
 * Bootstrap -> http://getbootstrap.com/
 * bower.io -> http://bower.io/
 
+####Manager dependencies
+<pre>
+	> npm install
+	> bower install
+</pre>
+
 ####Run Data Base
 <pre>
 	> mongod
@@ -18,7 +24,6 @@ This is only a test, not a functional application
 
 ####Run Server
 <pre>
-	> npm install
 	> node server.js
 </pre> 
 
