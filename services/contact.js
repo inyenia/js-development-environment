@@ -1,5 +1,4 @@
-var param = require("../swagger/paramTypes.js");
-var sw = require("../swagger/swagger.js");
+var sw = require("swagger-node-express");
 var swe = sw.errors;
 
 /**
@@ -73,7 +72,7 @@ exports.getContactById = {
         type : "Contact",
         nickname : "getContactById",
         produces : ["application/json"],
-        parameters : [param.path("contactId", "ID of the contact to return", "string")],
+        parameters : [sw.pathParam("contactId", "ID of the contact to return", "string")],
         responseMessages : [swe.invalid('id'), swe.notFound('contact')]
     },
     'action': function (req,res) {
@@ -98,7 +97,7 @@ exports.addContact = {
         notes : "Adds a new contact",
         summary : "Add a new contact",
         method: "POST",
-        parameters : [param.body("Contact name", "JSON object representing the carrier to add", "Contact")],
+        parameters : [sw.bodyParam("Contact name", "JSON object representing the carrier to add", "Contact")],
         responseMessages : [swe.invalid('input')],
         nickname : "addContact"
     },
@@ -132,8 +131,8 @@ exports.updateContact = {
         method: "PUT",
         //parameters : [param.body("Carrier ID", "Carrier ID to update", "Carrier"), param.body("Carrier name", "New carrier name", "Carrier")],
         parameters : [
-            param.query("id", "Contact ID to update", "string", true),
-            param.query("name", "New contact name to use", "string", true)
+            sw.queryParam("id", "Contact ID to update", "string", true),
+            sw.queryParam("name", "New contact name to use", "string", true)
         ],
         responseMessages : [swe.invalid('input')],
         type : "Contact",
@@ -170,7 +169,7 @@ exports.deleteContact = {
         summary : "Delete an existing contact",
         method: "DELETE",
         parameters : [
-            param.query("id", "Contact ID to delete", "string", true)
+            sw.queryParam("id", "Contact ID to delete", "string", true)
         ],
         responseMessages : [swe.invalid('input')],
         type : "Contact",

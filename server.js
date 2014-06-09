@@ -23,7 +23,7 @@ try {
 		url = require("url"),
 		fs = require('fs'),
 		color = require('colors'),
-        swagger = require("./swagger/swagger.js"),
+        swagger = require("swagger-node-express"),
 		extras = require('express-extras'),
         db = require('./db.js');
 

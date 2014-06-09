@@ -1,5 +1,4 @@
-var param = require("../swagger/paramTypes.js");
-var sw = require("../swagger/swagger.js");
+var sw = require("swagger-node-express");
 var swe = sw.errors;
 
 /**
@@ -73,7 +72,7 @@ exports.getPhoneById = {
         type : "Phone",
         nickname : "getPhoneById",
         produces : ["application/json"],
-        parameters : [param.path("phoneId", "ID of the phone to return", "string")],
+        parameters : [sw.pathParam("phoneId", "ID of the phone to return", "string")],
         responseMessages : [swe.invalid('id'), swe.notFound('phone')]
     },
     'action': function (req,res) {
@@ -98,7 +97,7 @@ exports.addPhone = {
         notes : "Adds a new phone",
         summary : "Add a new phone",
         method: "POST",
-        parameters : [param.body("Phone name", "JSON object representing the phone to add", "Phone")],
+        parameters : [sw.bodyParam("Phone name", "JSON object representing the phone to add", "Phone")],
         responseMessages : [swe.invalid('input')],
         nickname : "addPhone"
     },
@@ -131,8 +130,8 @@ exports.updatePhone = {
         summary : "Update an existing phone",
         method: "PUT",
         parameters : [
-            param.query("id", "Phone ID to update", "string", true),
-            param.query("name", "New phone name to use", "string", true)
+            sw.queryParam("id", "Phone ID to update", "string", true),
+            sw.queryParam("name", "New phone name to use", "string", true)
         ],
         responseMessages : [swe.invalid('input')],
         type : "Phone",
@@ -169,7 +168,7 @@ exports.deletePhone = {
         summary : "Delete an existing phone",
         method: "DELETE",
         parameters : [
-            param.query("id", "Phone ID to delete", "string", true)
+            sw.queryParam("id", "Phone ID to delete", "string", true)
         ],
         responseMessages : [swe.invalid('input')],
         type : "Phone",

@@ -1,5 +1,4 @@
-var param = require("../swagger/paramTypes.js");
-var sw = require("../swagger/swagger.js");
+var sw = require("swagger-node-express");
 var swe = sw.errors;
 
 /**
@@ -37,7 +36,8 @@ var Carrier = require('../models/carrier.js');
 exports.getAllCarriers = {
     'spec': {
         description : "List all phone carriers",
-        path : "/api/carrier/list",
+        path : "/carrier/list",
+        basePath : "/api",
         method: "GET",
         summary : "List all phone carriers",
         notes : "Returns a list of all phone carriers",
@@ -73,7 +73,7 @@ exports.getCarrierById = {
         type : "Carrier",
         nickname : "getCarrierById",
         produces : ["application/json"],
-        parameters : [param.path("carrierId", "ID of the carrier to return", "string")],
+        parameters : [sw.pathParam("carrierId", "ID of the carrier to return", "string")],
         responseMessages : [swe.invalid('id'), swe.notFound('carrier')]
     },
     'action': function (req,res) {
@@ -98,7 +98,7 @@ exports.addCarrier = {
         notes : "Adds a new carrier",
         summary : "Add a new carrier",
         method: "POST",
-        parameters : [param.body("Carrier name", "JSON object representing the carrier to add", "Carrier")],
+        parameters : [sw.bodyParam("Carrier name", "JSON object representing the carrier to add", "Carrier")],
         responseMessages : [swe.invalid('input')],
         nickname : "addCarrier"
     },
@@ -132,8 +132,8 @@ exports.updateCarrier = {
         method: "PUT",
         //parameters : [param.body("Carrier ID", "Carrier ID to update", "Carrier"), param.body("Carrier name", "New carrier name", "Carrier")],
         parameters : [
-            param.query("id", "Carrier ID to update", "string", true),
-            param.query("name", "New carrier name to use", "string", true)
+            sw.queryParam("id", "Carrier ID to update", "string", true),
+            sw.queryParam("name", "New carrier name to use", "string", true)
         ],
         responseMessages : [swe.invalid('input')],
         type : "Carrier",
@@ -170,7 +170,7 @@ exports.deleteCarrier = {
         summary : "Delete an existing carrier",
         method: "DELETE",
         parameters : [
-            param.query("id", "Carrier ID to delete", "string", true)
+            sw.queryParam("id", "Carrier ID to delete", "string", true)
         ],
         responseMessages : [swe.invalid('input')],
         type : "Carrier",

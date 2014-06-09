@@ -9,6 +9,7 @@ This is only a test, not a functional application
 * mongoDB -> http://www.mongodb.org/
 * Angular.js -> https://angularjs.org/
 * Bootstrap -> http://getbootstrap.com/
+* bower.io -> http://bower.io/
 
 ####Run Data Base
 <pre>

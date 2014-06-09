@@ -1,5 +1,4 @@
-var param = require("../swagger/paramTypes.js");
-var sw = require("../swagger/swagger.js");
+var sw = require("swagger-node-express");
 var swe = sw.errors;
 
 /**
@@ -73,7 +72,7 @@ exports.getManufacturerById = {
         type : "Manufacturer",
         nickname : "getManufacturerById",
         produces : ["application/json"],
-        parameters : [param.path("manufId", "ID of the manufacturer to return", "string")],
+        parameters : [sw.pathParam("manufId", "ID of the manufacturer to return", "string")],
         responseMessages : [swe.invalid('id'), swe.notFound('manufacturer')]
     },
     'action': function (req,res) {
@@ -98,7 +97,7 @@ exports.addManufacturer = {
         notes : "Adds a new manufacturer",
         summary : "Add a new manufacturer",
         method: "POST",
-        parameters : [param.body("Manufacturer name", "JSON object representing the manufacturer to add", "Manufacturer")],
+        parameters : [sw.bodyParam("Manufacturer name", "JSON object representing the manufacturer to add", "Manufacturer")],
         responseMessages : [swe.invalid('input')],
         nickname : "addManufacturer"
     },
@@ -131,8 +130,8 @@ exports.updateManufacturer = {
         summary : "Update an existing manufacturer",
         method: "PUT",
         parameters : [
-            param.query("id", "Manufacturer ID to update", "string", true),
-            param.query("name", "New manufacturer name to use", "string", true)
+            sw.queryParam("id", "Manufacturer ID to update", "string", true),
+            sw.queryParam("name", "New manufacturer name to use", "string", true)
         ],
         responseMessages : [swe.invalid('input')],
         type : "Manufacturer",
@@ -169,7 +168,7 @@ exports.deleteManufacturer = {
         summary : "Delete an existing manufacturer",
         method: "DELETE",
         parameters : [
-            param.query("id", "Manufacturer ID to delete", "string", true)
+            sw.queryParam("id", "Manufacturer ID to delete", "string", true)
         ],
         responseMessages : [swe.invalid('input')],
         type : "Manufacturer",
