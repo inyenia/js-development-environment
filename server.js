@@ -166,7 +166,7 @@ swagger.configure("http://127.0.0.1:3000", "1.0.0");
 
 
 // Serve up swagger ui at /docs via static route
-var docs_handler = express.static(__dirname + '/public/components/swagger-ui/');
+var docs_handler = express.static(__dirname + '/public/swagger_docs/');
 app.get(/^\/docs(\/.*)?$/, function(req, res, next) {
 	if (req.url === '/docs') { // express static barfs on root url w/o trailing slash
 		res.writeHead(302, { 'Location' : req.url + '/' });
