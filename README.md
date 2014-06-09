@@ -75,3 +75,7 @@ This is only a test, not a functional application
 * https://github.com/dgiul/node-swagger-express-mongodb
 * https://github.com/Dayde/angularjs-frontend-using-swagger-documentation
 * https://github.com/zkirill/nodejs-mongo-angular-crud
+
+* https://github.com/hadiariawan/monode-crud
+* https://github.com/juanghurtado/ngbp
+* https://github.com/ngbp/ngbp

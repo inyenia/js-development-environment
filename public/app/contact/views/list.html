@@ -1,21 +1,26 @@
 
 <div class="container">
+    <br/>
+    <div class="panel panel-primary">
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            Contacts
+            <button type="button" class="btn btn-default btn-sm">
+                <a href ng-click="add(contact)">
+                    <span class="glyphicon glyphicon-plus"></span>  Add
+                </a>
+            </button>
+            <div ng-hide="dataReceived"><img src="/images/throbber.gif" alt="Loading..." /></div>
+        </div>
 
-	<div class="span4"></div>
-	<div class="span4">
-		<h3><span translate>Contacts</span>
-			<a href ng-click="addContact()" ><i class="icon-plus-sign"></i></a>
-			<a href ng-click="refresh()"><i class="icon-refresh"></i></a>
-		</h3>
-		<table id="contactList" class="table table-hover table-condensed" ng-show="dataReceived">
-			<tr ng-repeat="contact in contacts">
-				<td>
-					{{contact.name}} {{contact.lastName}}
-				</td>
-				<td><a href ng-click="edit(contact)"><i class="icon-edit"></i></a></td>
-			</tr>
-		</table>
-        <div ng-hide="dataReceived"><img src="/images/throbber.gif" alt="Loading..." /></div>
-	</div>
-	<div class="span4"></div>
+        <!-- Table -->
+        <table class="table">
+            <tr ng-repeat="contact in contacts">
+                <td>
+                    {{contact.name}} {{contact.lastName}}
+                </td>
+                <td><a href ng-click="edit(contact)"><i class="icon-edit"></i></a></td>
+            </tr>
+        </table>
+    </div>
 </div>
