@@ -29,8 +29,8 @@ This is only a test, not a functional application
 
 ####Project architecture
 <pre>
-	+ public 				(front end folder)
-		+ components
+	+ public 				(frontend folder)
+		+ bower_components
 			\ angular
 			\ bootstrap
 			\ jquery
@@ -38,15 +38,23 @@ This is only a test, not a functional application
 			
 		\ stylesheets
 		\ images
-		\ controller 		(angular.js controllers)
-		\ services 			(angular.js services)
-		+ views 			(angular.js views)
+		+ app
+		    + contact
+		        - controller.js 		(angular.js controllers)
+		        - services.js 			(angular.js services)
+		        \ views 			    (angular.js views)
+		            - edit.html
+		            - list.html
+		    + home
+		    + carrier
+		    + docs
+
 		app.js 				(routers and swagger doc reader)
 		
 	+ model 				(data base and swagger models)
 	\ services 				(rest services)
-	\ swagger 				(swagger spec generator)
-	
+
+	bower.js                (frontend dependencies)
 	package.json 			(node dependencies)
 	config.js 				(configure enviroment)
 	db.js 					(data base manager)
