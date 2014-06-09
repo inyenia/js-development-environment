@@ -4,15 +4,15 @@ angular.module('myApp', [])
 	.config(function ($routeProvider) {
 		$routeProvider
             .when('/home', {
-                templateUrl: 'views/home.html'
+                templateUrl: '/app/home/index.html'
             }).when('/contact', {
-				templateUrl: '../views/contact/list.html',
+				templateUrl: '/app/contact/views/list.html',
 				controller: 'ListCtrl'
 			}).when('/addContact', {
-				templateUrl: '../views/contact/edit.html',
+				templateUrl: '/app/contact/views/edit.html',
 				controller: 'EditCtrl'
 			}).when('/contact/edit/:contactId', {
-				templateUrl: '../views/contact/edit.html',
+				templateUrl: '/app/contact/views/edit.html',
 				controller: 'EditCtrl'
 			}).otherwise({
 				redirectTo: '/home'
