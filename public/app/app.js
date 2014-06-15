@@ -31,12 +31,12 @@ angular.module('myApp', [])
 
 var protocol = 'http';
 var domain = '127.0.0.1';
-var port = '3000';
+var port = '8080';
 var context = '';
-var apiDocs = '/api-docs';
+var documentationUrl = '/api-docs';
 
 var baseUrl = protocol + '://' + domain + (port ? (':' + port) : '');
-var documentationUrl = context + apiDocs;
+baseUrl = 'http://js-dev-evn.jit.su';
 
 angular.module('myApp').value('baseUrl', baseUrl);
 angular.module('myApp').value('documentationUrl', documentationUrl);

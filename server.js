@@ -20,12 +20,20 @@
 
 try {
 	var express = require("express"),
-		url = require("url"),
+		urlModule = require("url"),
 		fs = require('fs'),
 		color = require('colors'),
         swagger = require("swagger-node-express"),
 		extras = require('express-extras'),
-        db = require('./db.js');
+        db = require('./db.js'),
+        port = 8080,
+        url = 'http://127.0.0.1:' + port;
+
+    /* We can access nodejitsu enviroment variables from process.env */
+    /* Note: the SUBDOMAIN variable will always be defined for a nodejitsu app */
+    if(process.env.SUBDOMAIN){
+        url = 'http://' + process.env.SUBDOMAIN + '.jit.su';
+    }
 
 } catch(err) {
 	var msg = '\nCannot initialize API\n' + err + '\n';
@@ -51,6 +59,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Setup throttling to keep users from abusing the API
+
 app.use(extras.throttle({
 	urlCount: 100,
 	urlSec: 1,
@@ -72,7 +81,7 @@ swagger.addValidator(
 		if ("POST" == httpMethod || "DELETE" == httpMethod || "PUT" == httpMethod) {
 			var apiKey = req.headers["api_key"];
 			if (!apiKey) {
-				apiKey = url.parse(req.url,true).query["api_key"];
+				apiKey = urlModule.parse(req.url,true).query["api_key"];
 			}
 			//if ("1234" == apiKey) {
 				return true; 
@@ -162,7 +171,7 @@ swagger.setAuthorizations({
 
 // Configures the app's base path and api version.
 swagger.configureSwaggerPaths("", "api-docs", "");
-swagger.configure("http://127.0.0.1:3000", "1.0.0");
+swagger.configure(url, "1.0.0");
 
 
 // Serve up swagger ui at /docs via static route
@@ -179,4 +188,4 @@ app.get(/^\/docs(\/.*)?$/, function(req, res, next) {
 });
 
 // Start the server on port 3000
-app.listen(3000);
+app.listen(8080);

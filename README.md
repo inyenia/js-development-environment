@@ -1,6 +1,6 @@
 java script development environment 
 ================
-This is only a test, not a functional application
+This is only a test, not a functional application, you can view this demo in http://js-dev-evn.jit.su/
 
 ###Stack
 
@@ -83,4 +83,9 @@ This is only a test, not a functional application
 
 ####Hosting
 * https://www.nodejitsu.com
+
+<pre>
+	> sudo npm install jitsu -g
+	> jitsu deploy
+</pre> 
 
