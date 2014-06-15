@@ -36,7 +36,7 @@ var Phone = require('../models/phone.js');
 exports.getAllPhones = {
     'spec': {
         description : "List all phone models",
-        path : "/api/phone/list",
+        path : "/api/phone",
         method: "GET",
         summary : "List all phone models",
         notes : "Returns a list of all phone models",
@@ -131,7 +131,7 @@ exports.updatePhone = {
         method: "PUT",
         parameters : [
             sw.queryParam("id", "Phone ID to update", "string", true),
-            sw.queryParam("name", "New phone name to use", "string", true)
+            sw.bodyParam("Phone model", "JSON object representing the model to update", "Phone")
         ],
         responseMessages : [swe.invalid('input')],
         type : "Phone",
@@ -139,24 +139,28 @@ exports.updatePhone = {
     },
     'action': function(req, res, next) {
         var query = req.query;
+        var phone = req.body;
         if(!query || !query.id) {
             throw swe.invalid('phone id');
-        } else if(!query || !query.name) {
-            throw swe.invalid('phone name');
+        } else if(!contact) {
+            throw swe.invalid('phone');
         } else {
             // Update an existing document (database will be updated automatically)
-            Phone.model.update({ _id : query.id }, { name: query.name }, function (err, numRowsAffected, raw) {
+            delete phone._id;
+            delete phone.__v;
+            Phone.model.update({ _id : query.id }, phone, function (err, numRowsAffected, raw) {
                 if (err) return res.send(500, { error: err });
 
                 if (numRowsAffected > 0) {
                     res.send(raw);
                 } else {
-                    res.send(500, { error: 'phone not updated' });
+                    res.send(500, { error: 'contact not updated' });
                 };
             });
         }
     }
 };
+
 
 /**
  * Delete methods

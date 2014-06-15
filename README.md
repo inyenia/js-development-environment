@@ -79,3 +79,8 @@ This is only a test, not a functional application
 * https://github.com/hadiariawan/monode-crud
 * https://github.com/juanghurtado/ngbp
 * https://github.com/ngbp/ngbp
+* https://www.twilio.com/blog/2013/12/votr-part-5-angularjs-crud-restful-apis.html
+
+####Hosting
+* https://www.nodejitsu.com
+

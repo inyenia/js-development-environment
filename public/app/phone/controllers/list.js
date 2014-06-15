@@ -1,20 +1,20 @@
 'use strict';
 
-angular.module('myApp').controller('ContactListController', function ($scope, $location, ContactService) {
+angular.module('myApp').controller('PhoneListController', function ($scope, $location, PhoneService) {
 
 	$scope.dataSource = [];
 
 
 	$scope.add = function () {
-		$location.path('/contact/new');
+		$location.path('/phone/new');
 	};
 
 	$scope.edit = function (data) {
-		$location.path('/contact/edit/' + data._id);
+		$location.path('/phone/edit/' + data._id);
 	};
 
     $scope.delete = function (data) {
-        ContactService.delete(data).then(function () {
+        PhoneService.delete(data).then(function () {
                 $scope.refresh();
             }
         );
@@ -22,7 +22,7 @@ angular.module('myApp').controller('ContactListController', function ($scope, $l
 
     $scope.refresh = function () {
 		$scope.dataReceived = false;
-		var httpPromise = ContactService.list();
+		var httpPromise = PhoneService.list();
 		httpPromise.then(function(httpResponse) {
 			$scope.dataSource = httpResponse.data;
 			$scope.dataReceived = true;

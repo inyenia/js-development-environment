@@ -1,8 +1,8 @@
 'use strict';
 
-angular.module('myApp').service('ContactService', function ($http, $q, UrlService) {
+angular.module('myApp').service('PhoneService', function ($http, $q, UrlService) {
 
-	var ContactService = {};
+	var PhoneService = {};
 
 	var resourceUrl;
 	var docUrl;
@@ -10,8 +10,8 @@ angular.module('myApp').service('ContactService', function ($http, $q, UrlServic
 	var resourceUrlReceived;
 
 	// Getting the contacts API documention URL and a promise to know when it's loaded.
-	docUrlReceived = UrlService.contactAPI.then(function (contactUrl) {
-		docUrl = contactUrl.replace("api", "api-docs");
+	docUrlReceived = UrlService.phoneAPI.then(function (url) {
+		docUrl = url.replace("api", "api-docs");
 	});
 
 	// When the documentation is received, getting the contacts resource URL and a promise to know when it's loaded.
@@ -40,26 +40,26 @@ angular.module('myApp').service('ContactService', function ($http, $q, UrlServic
 		};
 	};
 
-	ContactService.list = safeCall(function () {
+    PhoneService.list = safeCall(function () {
 		return $http.get(resourceUrl);
 	});
 
-	ContactService.get = safeCall(function (id) {
+    PhoneService.get = safeCall(function (id) {
         return $http.get(resourceUrl + '/' + id);
 	});
 
-	ContactService.add = safeCall(function (data) {
+    PhoneService.add = safeCall(function (data) {
 		return $http.post(resourceUrl, JSON.stringify(data));
 	});
 
-	ContactService.update = safeCall(function (data) {
+    PhoneService.update = safeCall(function (data) {
 		return $http.put(resourceUrl + '?id=' + data._id, JSON.stringify(data));
 	});
 
-    ContactService.delete = safeCall(function (data) {
+    PhoneService.delete = safeCall(function (data) {
         return $http.delete(resourceUrl + '?id=' + data._id);
     });
 
-    return ContactService;
+    return PhoneService;
 
 });

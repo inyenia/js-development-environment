@@ -129,10 +129,9 @@ exports.updateContact = {
         notes : "Update an existing contact",
         summary : "Update an existing contact",
         method: "PUT",
-        //parameters : [param.body("Carrier ID", "Carrier ID to update", "Carrier"), param.body("Carrier name", "New carrier name", "Carrier")],
         parameters : [
             sw.queryParam("id", "Contact ID to update", "string", true),
-            sw.queryParam("name", "New contact name to use", "string", true)
+            sw.bodyParam("Contact model", "JSON object representing the model to update", "Contact")
         ],
         responseMessages : [swe.invalid('input')],
         type : "Contact",
@@ -140,13 +139,16 @@ exports.updateContact = {
     },
     'action': function(req, res, next) {
         var query = req.query;
+        var contact = req.body;
         if(!query || !query.id) {
             throw swe.invalid('contact id');
-        } else if(!query || !query.name) {
-            throw swe.invalid('contact name');
+        } else if(!contact) {
+            throw swe.invalid('contact');
         } else {
             // Update an existing document (database will be updated automatically)
-            Contact.model.update({ _id : query.id }, { name: query.name }, function (err, numRowsAffected, raw) {
+            delete contact._id;
+            delete contact.__v;
+            Contact.model.update({ _id : query.id }, contact, function (err, numRowsAffected, raw) {
                 if (err) return res.send(500, { error: err });
 
                 if (numRowsAffected > 0) {

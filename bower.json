@@ -6,7 +6,6 @@
         "jquery": "2.0.2",
         "bootstrap": "3.1.1",
         "angular": "1.0.7",
-        "underscore": "1.6.0",
-        "swagger-ui": "2.0.17"
+        "underscore": "1.6.0"
     }
 }

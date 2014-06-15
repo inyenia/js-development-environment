@@ -5,6 +5,22 @@ body {
     padding: 40px 15px;
 }
 
+.panel-heading {
+    padding: 0px 0px;
+}
+
+.panel-footer {
+    padding: 0px 0px;
+}
+
+.pagination {
+    margin: 13px 0;
+}
+
+table thead {
+    background-color: #F1F0F0;
+}
+
 [class^="icon-"],
 [class*=" icon-"] {
     display: inline-block;

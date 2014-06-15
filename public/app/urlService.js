@@ -10,12 +10,24 @@ angular.module('myApp').service('UrlService', function (baseUrl, documentationUr
 		if (apiDocumentation !== undefined) {
 			api = _.findWhere(apiDocumentation.apis, { path: description });
 		}
-		return api ? apiDocumentation.basePath + api.path : undefined;
+		return api ? baseUrl + "/api" + api.path : undefined;
 	};
 
-	UrlService.contactUrl = apiDoc.then(function (apiDocumentation) {
-		return getApi(apiDocumentation.data, '/api/contact');
+	UrlService.carrierAPI = apiDoc.then(function (apiDocumentation) {
+		return getApi(apiDocumentation.data, '/carrier');
 	});
+
+    UrlService.contactAPI = apiDoc.then(function (apiDocumentation) {
+        return getApi(apiDocumentation.data, '/contact');
+    });
+
+    UrlService.manufacturerAPI = apiDoc.then(function (apiDocumentation) {
+        return getApi(apiDocumentation.data, '/manufacturer');
+    });
+
+    UrlService.phoneAPI = apiDoc.then(function (apiDocumentation) {
+        return getApi(apiDocumentation.data, '/phone');
+    });
 
 	return UrlService;
 
